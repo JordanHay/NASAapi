@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./css/index.css" >
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <title>NASA API</title>
+</head>
+<body>
+    <h1>NASA APOD: Astronomy Picture of the Day</h1>
+<div id="app">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="mt-5">
+                    <div class="card" style="width: 50rem;">
+                       
+                        <img :src="imgSrc" class="card-img-top" :alt="imgTitle" height="600" width="800">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ imgTitle }}</h5>
+                            <p class="card-text">{{ imgExplanation }}</p>
+                            <a :href="imgSrc" target="_blank" class="btn btn-primary">View Image</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Vue js JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- Axios js JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- Vue js Instance and Axios Request -->
+<script>
+    var nasaApiKey = 'voy4Fx4zUd0JlGZr9NVYhhWew95ewr5KPvdQuxDD';
+    var url = 'https://api.nasa.gov/planetary/apod?api_key=' + nasaApiKey;
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            imgSrc: '',
+            imgTitle: '',
+            imgExplanation: '',
+            imgDate: '',
+            imgUrl: '',
+        },
+    });
+    axios.get(url).then(function (response) {
+        vm.imgSrc = response.data.url;
+        vm.imgTitle = response.data.title;
+        vm.imgExplanation = response.data.explanation;
+        vm.imgDate = response.data.date;
+    })
+</script>
+</body>
+</html>
